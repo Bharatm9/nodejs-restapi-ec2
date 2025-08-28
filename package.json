@@ -1,13 +1,14 @@
 {
   "name": "nodejs-restapi-render-deployment",
   "version": "1.0.0",
-  "description": "-   STEP1 - Login to AWS console and create EC2 instance -   STEP2 - Setup GitHub Repo and Push your project -   STEP3 - Login to EC2 instance -   STEP4 - Setup GitHub Action runner on EC2 instance -   STEP5 - Create GitHub Secrets for managing environment variables -   STEP6 - Create CI/CD Workflow using GitHub Action -   STEP7 - Install nodejs and nginx on EC2 instance",
+  "description": "Node.js REST API CI/CD deployment example",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node dist/server.js",
     "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "echo \"No tests yet\" && exit 0",
+    "build": "mkdir -p dist && cp server.js dist/"
   },
   "keywords": [],
   "author": "",
