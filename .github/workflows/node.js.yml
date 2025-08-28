@@ -114,7 +114,7 @@ jobs:
 
   deploy:
     runs-on: self-hosted   
-    needs: [build, security]
+    needs: [security]      
     if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v3
@@ -125,10 +125,11 @@ jobs:
           name: build-output
           path: ./app
 
-      - name: Deploy to server
+      - name: Deploy to Server
         run: |
-          echo "🚀 Deploying app..."
+          echo "🚀 Starting Deployment on self-hosted runner..."
           cd ./app
-          # Example: restart Node.js with PM2
+
+          # Example: restart Node.js app using PM2
           pm2 delete all || true
           pm2 start dist/server.js --name nodejs-app
