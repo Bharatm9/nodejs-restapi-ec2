@@ -1,4 +1,4 @@
-name: Node.js CI/CD 
+name: Node.js CI/CD  
 
 on:
   push:
@@ -79,7 +79,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: build-output
-          path: server.js   # ✅ upload server.js directly
+          path: |
+            .
+            !node_modules/**
           retention-days: 3  
 
   security:
@@ -139,4 +141,4 @@ jobs:
         echo "🚀 Starting Deployment..."
         cd ./app
         npm install --production
-        node server.js  
+        node server.js
