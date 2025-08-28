@@ -117,26 +117,25 @@ jobs:
     needs: [security]
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Download Build Artifacts
-        id: download
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output
-          path: ./app
-        continue-on-error: true  
+    - name: Download Build Artifacts
+      id: download
+      uses: actions/download-artifact@v4
+      with:
+        name: build-output
+        path: ./app
+      continue-on-error: true  
 
-      - name: Check if artifact exists
-        run: |
-          if [ ! -d "./app" ] || [ -z "$(ls -A ./app)" ]; then
-            echo "⚠️ No build artifact found. Skipping deployment gracefully."
-            exit 0
-          fi
+    - name: List contents of ./app
+      run: |
+        echo "📂 Checking contents of ./app"
+        ls -R ./app || echo "⚠️ ./app folder missing!"
 
-      - name: Deploy to Server
-        run: |
-          echo "🚀 Starting Deployment..."
-          cd ./app
-          npm install --production
-          node dist/server.js
+    - name: Deploy to Server
+      if: success() && hashFiles('./app/**') != ''
+      run: |
+        echo "🚀 Starting Deployment..."
+        cd ./app
+        npm install --production
+        node dist/server.js
